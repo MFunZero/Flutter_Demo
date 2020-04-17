@@ -1,4 +1,8 @@
+ 
+import 'package:edu_flutter/Route/Route.dart';
 import 'package:flutter/material.dart';
+import 'Register.dart';
+import 'package:edu_flutter/Route/Route.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key key}) : super(key: key);
@@ -15,6 +19,17 @@ class LoginPage extends StatelessWidget {
         body: LoginHomePage(),
       ),
       theme: ThemeData(primarySwatch: Colors.blue),
+      // 路由
+      routes: {
+        "register": (context) => RegisterPage()
+      },
+      // routes: {
+        // "register": (context){
+        //   return RegisterPage(text:ModalRoute.of(context).settings.arguments);
+        // }
+      // },
+      // initialRoute: "/",
+      // onGenerateRoute: onGenerateRoute,
     );
   }
 }
@@ -72,6 +87,7 @@ class LoginHomePage extends StatelessWidget {
               child: TextField(
                 decoration: InputDecoration(
                   hintText: "请输入账号",
+                  prefixIcon: Icon(Icons.mobile_screen_share),
                   contentPadding: EdgeInsets.all(10),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(25),
@@ -85,6 +101,7 @@ class LoginHomePage extends StatelessWidget {
               child: TextField(
                 decoration: InputDecoration(
                   hintText: "请输入密码",
+                  prefixIcon: Icon(Icons.lock),
                   contentPadding: EdgeInsets.all(10),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(25),
@@ -121,7 +138,9 @@ class LoginHomePage extends StatelessWidget {
                   ),
                   onTap: (){
                     print("去注册");
-                    // Navigator()
+                    Navigator.of(context).pushNamed("register");
+                    // Navigator.of(context).pushNamed("register", arguments: "hi");
+                    // Navigator.push(context, new MaterialPageRoute(builder: (context) => new RegisterPage()));
                   },
                 ),
               ),

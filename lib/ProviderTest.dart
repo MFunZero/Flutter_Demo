@@ -18,7 +18,15 @@ class ProviderApp extends StatelessWidget {
       title: "跨组件共享状态",
       theme: ThemeData(primaryColor: Colors.blue),
       home: Scaffold(
-        appBar: AppBar(title: Text("共享状态")),
+        appBar: AppBar(
+          title: Text("共享状态"),
+          leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios),
+              color: Colors.white,
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+        ),
         body: ProviderRoute(),
       ),
     );

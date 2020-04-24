@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'Login/login.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:english_words/english_words.dart';
 import 'ProviderTest.dart';
+import 'dart:math';
 
 void main() => runApp(MyApp());
 
@@ -19,23 +21,23 @@ class MyApp extends StatelessWidget {
     //   home: MyHomePage(),
     // );
     return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          // This is the theme of your application.
-          //
-          // Try running your application with "flutter run". You'll see the
-          // application has a blue toolbar. Then, without quitting the app, try
-          // changing the primarySwatch below to Colors.green and then invoke
-          // "hot reload" (press "r" in the console where you ran "flutter run",
-          // or simply save your changes to "hot reload" in a Flutter IDE).
-          // Notice that the counter didn't reset back to zero; the application
-          // is not restarted.
-          primaryColor: Colors.blue,
-        ),
-        home: MyHomePage(),
-            //BottomNavBarRoute() //CustomScrollViewTestRoute()//ScrollControllerTestRoute()// BottomNavBarRoute(),
-        // ScaffoldRoute(), // CounterWidget(),//MyHomePage(title: 'Flutter Demo Home Page'),
-        );
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        // This is the theme of your application.
+        //
+        // Try running your application with "flutter run". You'll see the
+        // application has a blue toolbar. Then, without quitting the app, try
+        // changing the primarySwatch below to Colors.green and then invoke
+        // "hot reload" (press "r" in the console where you ran "flutter run",
+        // or simply save your changes to "hot reload" in a Flutter IDE).
+        // Notice that the counter didn't reset back to zero; the application
+        // is not restarted.
+        primaryColor: Colors.blue,
+      ),
+      home: MyHomePage(),
+      //BottomNavBarRoute() //CustomScrollViewTestRoute()//ScrollControllerTestRoute()// BottomNavBarRoute(),
+      // ScaffoldRoute(), // CounterWidget(),//MyHomePage(title: 'Flutter Demo Home Page'),
+    );
   }
 }
 
@@ -83,7 +85,10 @@ class _MyHomePageState extends State<MyHomePage> {
     // return CounterWidget();
     return Scaffold(
       appBar: AppBar(title: Text("子树中获取State对象")),
-      body: ConstrainedBoxTest(),
+      body: AnimatedWidgetFadeTest(),
+          //AnimatedWidgetsTest(), // AnimatedSwitcherCounterRoute(), //HeroAnimationRoute(),
+      //MyNotificationRoute(), //FlexLayoutTestRoute(), //GestureDetecorTest(), //TestDialog(),
+      // AsyncUpdateUI(), //ThemeTestRoute(),//TestNavBar(), //ConstrainedBoxTest(),
     );
 
     // return Scaffold(
@@ -605,51 +610,74 @@ class FlexLayoutTestRoute extends StatefulWidget {
 class _FlexLayoutTestRouteState extends State<FlexLayoutTestRoute> {
   @override
   Widget build(BuildContext context) {
-    return Column(
+    // return Column(
+    //   children: <Widget>[
+    //     Flex(
+    //       direction: Axis.horizontal,
+    //       children: <Widget>[
+    //         Expanded(
+    //           flex: 2,
+    //           child: Container(
+    //             height: 30,
+    //             color: Colors.red,
+    //           ),
+    //         ),
+    //         Expanded(
+    //           flex: 2,
+    //           child: Container(
+    //             height: 30,
+    //             color: Colors.blue,
+    //           ),
+    //         ),
+    //       ],
+    //     ),
+    //     Padding(
+    //       padding: const EdgeInsets.only(top: 20),
+    //       child: SizedBox(
+    //         height: 100,
+    //         child: Flex(
+    //           direction: Axis.vertical,
+    //           children: <Widget>[
+    //             Expanded(
+    //               flex: 2,
+    //               child: Container(
+    //                 // height: 30,
+    //                 color: Colors.red,
+    //               ),
+    //             ),
+    //             Spacer(flex: 1),
+    //             Expanded(
+    //               flex: 1,
+    //               child: Container(
+    //                 // height: 30,
+    //                 color: Colors.green,
+    //               ),
+    //             ),
+    //           ],
+    //         ),
+    //       ),
+    //     ),
+    //   ],
+    // );
+    return Flex(
+      direction: Axis.vertical,
       children: <Widget>[
-        Flex(
-          direction: Axis.horizontal,
-          children: <Widget>[
-            Expanded(
-              flex: 2,
-              child: Container(
-                height: 30,
-                color: Colors.red,
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Container(
-                height: 30,
-                color: Colors.blue,
-              ),
-            ),
-          ],
+        Expanded(
+          flex: 1,
+          child: Container(
+            // width: 200,
+            // margin: EdgeInsets.all(0),
+            // height: 30.0,
+            color: Colors.red,
+          ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 20),
-          child: SizedBox(
-            height: 100,
-            child: Flex(
-              direction: Axis.vertical,
-              children: <Widget>[
-                Expanded(
-                  flex: 2,
-                  child: Container(
-                    // height: 30,
-                    color: Colors.red,
-                  ),
-                ),
-                Spacer(flex: 1),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    // height: 30,
-                    color: Colors.green,
-                  ),
-                ),
-              ],
-            ),
+        Expanded(
+          flex: 2,
+          child: Container(
+            // height: 30.0,
+            // width: 200,
+            // margin: EdgeInsets.all(0),
+            color: Colors.green,
           ),
         ),
       ],
@@ -960,101 +988,101 @@ class _ConstrainedBoxTestState extends State<ConstrainedBoxTest> {
   }
 
   Future<void> changeLanguage() async {
-  int i = await showDialog<int>(
+    int i = await showDialog<int>(
+        context: context,
+        builder: (BuildContext context) {
+          return SimpleDialog(
+            title: const Text('请选择语言'),
+            children: <Widget>[
+              SimpleDialogOption(
+                onPressed: () {
+                  // 返回1
+                  Navigator.pop(context, 1);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 6),
+                  child: const Text('中文简体'),
+                ),
+              ),
+              SimpleDialogOption(
+                onPressed: () {
+                  // 返回2
+                  Navigator.pop(context, 2);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 6),
+                  child: const Text('英国英语'),
+                ),
+              ),
+              SimpleDialogOption(
+                onPressed: () {
+                  // 返回2
+                  Navigator.pop(context, 2);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 6),
+                  child: const Text('美国英语'),
+                ),
+              ),
+              SimpleDialogOption(
+                onPressed: () {
+                  // 返回2
+                  Navigator.pop(context, 2);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 6),
+                  child: const Text('印度英语'),
+                ),
+              ),
+            ],
+          );
+        });
+
+    if (i != null) {
+      print("选择了：${i == 1 ? "中文简体" : "美国英语"}");
+    }
+  }
+
+  Future<void> showListDialog() async {
+    int index = await showDialog<int>(
       context: context,
       builder: (BuildContext context) {
-        return SimpleDialog(
-          title: const Text('请选择语言'),
+        var child = Column(
           children: <Widget>[
-            SimpleDialogOption(
-              onPressed: () {
-                // 返回1
-                Navigator.pop(context, 1);
+            ListTile(title: Text("请选择")),
+            Expanded(
+                child: ListView.builder(
+              itemCount: 30,
+              itemBuilder: (BuildContext context, int index) {
+                return ListTile(
+                  title: Text("$index"),
+                  onTap: () => Navigator.of(context).pop(index),
+                );
               },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 6),
-                child: const Text('中文简体'),
-              ),
-            ),
-            SimpleDialogOption(
-              onPressed: () {
-                // 返回2
-                Navigator.pop(context, 2);
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 6),
-                child: const Text('英国英语'),
-              ),
-            ),
-            SimpleDialogOption(
-              onPressed: () {
-                // 返回2
-                Navigator.pop(context, 2);
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 6),
-                child: const Text('美国英语'),
-              ),
-            ),
-            SimpleDialogOption(
-              onPressed: () {
-                // 返回2
-                Navigator.pop(context, 2);
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 6),
-                child: const Text('印度英语'),
-              ),
-            ),
+            )),
           ],
         );
-      });
-
-  if (i != null) {
-    print("选择了：${i == 1 ? "中文简体" : "美国英语"}");
-  }
-}
-
-Future<void> showListDialog() async {
-  int index = await showDialog<int>(
-    context: context,
-    builder: (BuildContext context) {
-      var child = Column(
-        children: <Widget>[
-          ListTile(title: Text("请选择")),
-          Expanded(
-              child: ListView.builder(
-            itemCount: 30,
-            itemBuilder: (BuildContext context, int index) {
-              return ListTile(
-                title: Text("$index"),
-                onTap: () => Navigator.of(context).pop(index),
-              );
-            },
-          )),
-        ],
-      );
-      //使用AlertDialog会报错
-      //return AlertDialog(content: child);
-      // way1
-      // return Dialog(child: child);
-      //way2
-      return UnconstrainedBox(
-        constrainedAxis: Axis.vertical,
-        child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: 300),
-          child: Material(
-            child: child,
-            type: MaterialType.card,
+        //使用AlertDialog会报错
+        //return AlertDialog(content: child);
+        // way1
+        // return Dialog(child: child);
+        //way2
+        return UnconstrainedBox(
+          constrainedAxis: Axis.vertical,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 300),
+            child: Material(
+              child: child,
+              type: MaterialType.card,
+            ),
           ),
-        ),
-      );
-    },
-  );
-  if (index != null) {
-    print("点击了：$index");
+        );
+      },
+    );
+    if (index != null) {
+      print("点击了：$index");
+    }
   }
-}
 
 // 弹出对话框
   Future<bool> showDeleteConfirmDialog1() {
@@ -1748,3 +1776,1113 @@ class _InheritedWidgetTestRouteState extends State<InheritedWidgetTestRoute> {
     );
   }
 }
+
+/// NavBar
+
+class NavBar extends StatelessWidget {
+  final String title;
+  final Color color;
+
+  const NavBar({Key key, this.title, this.color}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: BoxConstraints(
+        minHeight: 50,
+        minWidth: double.infinity,
+      ),
+      decoration: BoxDecoration(
+        color: color,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            offset: Offset(0, 3),
+            blurRadius: 3,
+          ),
+        ],
+      ),
+      child: Text(
+        title,
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: color.computeLuminance() < 0.5 ? Colors.white : Colors.black,
+        ),
+      ),
+      alignment: Alignment.center,
+    );
+  }
+}
+
+class TestNavBar extends StatelessWidget {
+  const TestNavBar({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        NavBar(
+          title: "标题",
+          color: Colors.blue,
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        NavBar(
+          title: "标题",
+          color: Colors.white,
+        ),
+      ],
+    );
+  }
+}
+
+class ThemeTestRoute extends StatefulWidget {
+  @override
+  _ThemeTestRouteState createState() => new _ThemeTestRouteState();
+}
+
+class _ThemeTestRouteState extends State<ThemeTestRoute> {
+  Color _themeColor = Colors.teal; //当前路由主题色
+
+  @override
+  Widget build(BuildContext context) {
+    ThemeData themeData = Theme.of(context);
+    return Theme(
+      data: ThemeData(
+          primarySwatch: _themeColor, //用于导航栏、FloatingActionButton的背景色等
+          iconTheme: IconThemeData(color: _themeColor) //用于Icon颜色
+          ),
+      child: Scaffold(
+        appBar: AppBar(title: Text("主题测试")),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            //第一行Icon使用主题中的iconTheme
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+              Icon(Icons.favorite),
+              Icon(Icons.airport_shuttle),
+              Text("  颜色跟随主题")
+            ]),
+            //为第二行Icon自定义颜色（固定为黑色)
+            Theme(
+              data: themeData.copyWith(
+                iconTheme: themeData.iconTheme.copyWith(color: Colors.black),
+              ),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(Icons.favorite),
+                    Icon(Icons.airport_shuttle),
+                    Text("  颜色固定黑色")
+                  ]),
+            ),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+            onPressed: () => //切换主题
+                setState(() => _themeColor =
+                    _themeColor == Colors.teal ? Colors.blue : Colors.teal),
+            child: Icon(Icons.palette)),
+      ),
+    );
+  }
+}
+
+/// 异步更新UI
+
+class AsyncUpdateUI extends StatelessWidget {
+  const AsyncUpdateUI({Key key}) : super(key: key);
+
+  Future<String> mockNetworkData() async {
+    return Future.delayed(Duration(seconds: 2), () => "网络数据");
+  }
+
+  Stream<int> counter() {
+    return Stream.periodic(Duration(seconds: 1), (i) {
+      return i;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // return Center(
+    //   child: FutureBuilder<String>(
+    //     future: mockNetworkData(),
+    //     builder: (BuildContext context, AsyncSnapshot snapshot) {
+    //       if (snapshot.connectionState == ConnectionState.done) {
+    //         if (snapshot.hasError) {
+    //           return Text("Error: ${snapshot.error}");
+    //         } else {
+    //           return Text("Contents: ${snapshot.data}");
+    //         }
+    //       } else {
+    //         return CircularProgressIndicator();
+    //       }
+    //     },
+    //   ),
+    // );
+
+    return StreamBuilder<int>(
+      stream: counter(), //
+      //initialData: ,// a Stream<int> or null
+      builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+        if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+        switch (snapshot.connectionState) {
+          case ConnectionState.none:
+            return Text('没有Stream');
+          case ConnectionState.waiting:
+            return Text('等待数据...');
+          case ConnectionState.active:
+            return Text('active: ${snapshot.data}');
+          case ConnectionState.done:
+            return Text('Stream已关闭');
+        }
+        return null; // unreachable
+      },
+    );
+  }
+}
+
+class TestDialog extends StatefulWidget {
+  TestDialog({Key key}) : super(key: key);
+
+  @override
+  _TestDialogState createState() => _TestDialogState();
+}
+
+class _TestDialogState extends State<TestDialog> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Container(
+        margin: EdgeInsets.only(top: 20),
+        child: RaisedButton(
+            child: Text("弹框"),
+            onPressed: () async {
+              // bool delete = await showDeleteConfirmDialog();
+              // if (delete == null) {
+              //   print("取消删除");
+              // } else {
+              //   // changeLanguage();
+              //   print("确认删除");
+              // }
+
+              // showLoadingDialog(); //加载框
+              // _showDatePicker(); //日期弹窗
+              _showDatePicker2(); // iOS 风格
+              // PersistentBottomSheetController<int> type = _showBottomSheetController();
+            }),
+      ),
+    );
+  }
+
+  Future<bool> showDeleteConfirmDialog() {
+    // var showDialog2 = showDialog<bool>(
+    //   context: context,
+    //   builder: (context) {
+    // return AlertDialog(
+    //   title: Text("提示"),
+    //   content: Text("您确定要删除当前文件吗?"),
+    //   actions: <Widget>[
+    //     FlatButton(
+    //         onPressed: () {
+    //           Navigator.of(context).pop();
+    //         },
+    //         child: Text("取消")),
+    //     FlatButton(
+    //         onPressed: () => Navigator.of(context).pop(true),
+    //         child: Text("删除")),
+    //   ],
+    // );
+    //   },
+    // );
+    // return showDialog2;
+
+    // way custom
+    showCustomDialog<bool>(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("提示"),
+            content: Text("您确定要删除当前文件吗?"),
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text("取消")),
+              FlatButton(
+                  onPressed: () => Navigator.of(context).pop(true),
+                  child: Text("删除")),
+            ],
+          );
+        });
+  }
+
+  Future<void> changeLanguage() async {
+    int i = await showDialog(
+      context: context,
+      builder: (context) {
+        return SimpleDialog(
+          title: const Text("请选择语言"),
+          children: <Widget>[
+            SimpleDialogOption(
+              onPressed: () {
+                Navigator.pop(context, 1);
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 6),
+                child: const Text("中文简体"),
+              ),
+            ),
+            SimpleDialogOption(
+              onPressed: () {
+                Navigator.pop(context, 2);
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 6),
+                child: const Text("美式英文"),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+    if (i != null) {
+      print("选择了： $i");
+    }
+  }
+
+  Future<T> showCustomDialog<T>({
+    @required BuildContext context,
+    bool barrierDissable = true,
+    WidgetBuilder builder,
+  }) {
+    final ThemeData theme = Theme.of(context, shadowThemeOnly: true);
+    return showGeneralDialog(
+      context: context,
+      pageBuilder: (context, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
+        final Widget pageChild = Builder(builder: builder);
+        return SafeArea(
+          child: Builder(builder: (context) {
+            return theme != null
+                ? Theme(data: theme, child: pageChild)
+                : pageChild;
+          }),
+        );
+      },
+      barrierDismissible: barrierDissable,
+      barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+      barrierColor: Colors.black26,
+      transitionDuration: const Duration(milliseconds: 150),
+      transitionBuilder: _buildMaterialDialogTransitions,
+    );
+  }
+
+  Widget _buildMaterialDialogTransitions(
+      BuildContext context,
+      Animation<double> animation,
+      Animation<double> secondaryAnimation,
+      Widget child) {
+    return ScaleTransition(
+      scale: CurvedAnimation(parent: animation, curve: Curves.easeOut),
+      child: child,
+    );
+  }
+
+  Future<int> _showModalBottomSheet() {
+    return showModalBottomSheet<int>(
+      context: context,
+      builder: (BuildContext context) {
+        return ListView.builder(
+          itemCount: 30,
+          itemBuilder: (BuildContext context, int index) {
+            return ListTile(
+              title: Text("$index"),
+              onTap: () => Navigator.of(context).pop(index),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  // 返回的是一个controller
+  PersistentBottomSheetController<int> _showBottomSheetController() {
+    return showBottomSheet<int>(
+      context: context,
+      builder: (BuildContext context) {
+        return ListView.builder(
+          itemCount: 30,
+          itemBuilder: (BuildContext context, int index) {
+            return ListTile(
+              title: Text("$index"),
+              onTap: () {
+                // do something
+                print("$index");
+                Navigator.of(context).pop();
+              },
+            );
+          },
+        );
+      },
+    );
+  }
+
+  void showLoadingDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) {
+        return UnconstrainedBox(
+          child: SizedBox(
+            width: 250,
+            child: AlertDialog(
+              content: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: CircularProgressIndicator(),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: Text(
+                      "正在加载...",
+                      style: TextStyle(
+                          fontWeight: FontWeight.normal, fontSize: 13),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  //日历选择
+  Future<DateTime> _showDatePicker() {
+    var date = DateTime.now();
+    return showDatePicker(
+        context: context,
+        initialDate: date,
+        firstDate: date,
+        lastDate: date.add(
+          Duration(days: 30),
+        ));
+  }
+
+  Future<DateTime> _showDatePicker2() {
+    var date = DateTime.now();
+    return showCupertinoModalPopup(
+      context: context,
+      builder: (ctx) {
+        return SizedBox(
+          height: 200,
+          child: CupertinoDatePicker(
+            mode: CupertinoDatePickerMode.dateAndTime,
+            minimumDate: date,
+            maximumDate: date.add(
+              Duration(days: 30),
+            ),
+            maximumYear: date.year + 1,
+            onDateTimeChanged: (DateTime value) {
+              print(value);
+            },
+          ),
+        );
+      },
+    );
+  }
+}
+
+class GestureDetecorTest extends StatefulWidget {
+  GestureDetecorTest({Key key}) : super(key: key);
+
+  @override
+  _GestureDetecorTestState createState() => _GestureDetecorTestState();
+}
+
+class _GestureDetecorTestState extends State<GestureDetecorTest> {
+  String _operation = "No Gesture detected!";
+  var bus = new EventBus();
+
+  @override
+  Widget build(BuildContext context) {
+    bus.on("login", (arg) {
+      print("loginEvent:${arg}");
+    });
+    return Center(
+      child: GestureDetector(
+        child: Container(
+            alignment: Alignment.center,
+            color: Colors.blue,
+            width: 200,
+            height: 100,
+            child: Text(
+              _operation,
+              style: TextStyle(color: Colors.white),
+            )),
+        onTap: () {},
+        onDoubleTap: () {
+          bus.emit("login", "登录");
+        }, //() => updateText("onDoubleTap"),
+        onLongPress: () => updateText("onLongPress"),
+      ),
+    );
+  }
+
+  void updateText(String text) {
+    _operation = text;
+    setState(() {});
+  }
+}
+
+/// 事件总线
+/// 订阅者回调签名
+typedef void EventCallBack(arg);
+
+class EventBus {
+  EventBus._internal();
+
+  //单例
+  static EventBus _singleton = new EventBus._internal();
+
+  factory EventBus() => _singleton;
+
+  var _emap = new Map<Object, List<EventCallBack>>();
+
+  void on(eventName, EventCallBack f) {
+    if (eventName == null || f == null) return;
+    _emap[eventName] ??= new List<EventCallBack>();
+    _emap[eventName].add(f);
+  }
+
+  void off(eventName, [EventCallBack f]) {
+    var list = _emap[eventName];
+    if (eventName == null || list == null) return;
+    if (f == null) {
+      _emap[eventName] = null;
+    } else {
+      list.remove(f);
+    }
+  }
+
+  void emit(eventName, [arg]) {
+    var list = _emap[eventName];
+    if (list == null) return;
+    int len = list.length - 1;
+    for (var i = len; i > -1; --i) {
+      list[i](arg);
+    }
+  }
+}
+
+/// notification
+class MyNotification extends Notification {
+  final String msg;
+  MyNotification(this.msg);
+}
+
+class MyNotificationRoute extends StatefulWidget {
+  MyNotificationRoute({Key key}) : super(key: key);
+
+  @override
+  _MyNotificationRouteState createState() => _MyNotificationRouteState();
+}
+
+class _MyNotificationRouteState extends State<MyNotificationRoute> {
+  String _msg = "";
+  @override
+  Widget build(BuildContext context) {
+    return NotificationListener<MyNotification>(
+      onNotification: (notification) {
+        setState(() {
+          _msg += notification.msg + "   ";
+        });
+
+        Navigator.push(
+            context,
+            PageRouteBuilder(
+              transitionDuration: Duration(milliseconds: 500),
+              pageBuilder: (context, animation, secondaryAnimation) {
+                return new FadeTransition(
+                  opacity: animation,
+                  child: ProviderApp(),
+                );
+              },
+            ));
+        // Navigator.push(
+        //         context,
+        //         new MaterialPageRoute(
+        //             builder: (context) => new ProviderApp()));
+
+        return true;
+      },
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            // RaisedButton(
+            // onPressed: () => MyNotification("Hi").dispatch(context),
+            // child: Text("Send Notification"),
+            // ),
+            // NotificationListener监听子树，用builder构建获取按钮位置的context
+            Builder(builder: (context) {
+              return RaisedButton(
+                onPressed: () => MyNotification("Hi").dispatch(context),
+                child: Text("Send Notification"),
+              );
+            }),
+            Text(_msg),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+///动画
+
+// 路由A
+class HeroAnimationRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.topCenter,
+      child: InkWell(
+        child: Hero(
+          tag: "avatar1", //唯一标记，前后两个路由页Hero的tag必须相同
+          child: ClipOval(
+            child: Image.asset(
+              "images/avatar_bg.jpg",
+              width: 100.0,
+              height: 100.0,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        onTap: () {
+          //打开B路由
+          Navigator.push(context, PageRouteBuilder(pageBuilder:
+              (BuildContext context, Animation animation,
+                  Animation secondaryAnimation) {
+            return new FadeTransition(
+              opacity: animation,
+              child: Scaffold(
+                appBar: AppBar(
+                  title: Text("原图"),
+                ),
+                body: HeroAnimationRouteB(),
+              ),
+            );
+          }));
+        },
+      ),
+    );
+  }
+}
+
+class HeroAnimationRouteB extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Hero(
+        tag: "avatar1", //唯一标记，前后两个路由页Hero的tag必须相同
+        child: Image.asset("images/avatar_bg.jpg"),
+      ),
+    );
+  }
+}
+
+class AnimatedSwitcherCounterRoute extends StatefulWidget {
+  AnimatedSwitcherCounterRoute({Key key}) : super(key: key);
+
+  @override
+  _AnimatedSwitcherCounterRouteState createState() =>
+      _AnimatedSwitcherCounterRouteState();
+}
+
+class _AnimatedSwitcherCounterRouteState
+    extends State<AnimatedSwitcherCounterRoute> {
+  int _count = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    Color _decorationColor = Colors.blue;
+    var duration = Duration(seconds: 1);
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 500),
+            transitionBuilder: (Widget child, Animation<double> animation) {
+              // return ScaleTransition(
+              //   scale: animation,
+              //   child: child,
+              // );
+              ///自定义动画 左出右进
+              // var tween = Tween<Offset>(begin:Offset(1,0), end: Offset(0,0));
+              // return MySlideTranstion(position:tween.animate(animation), child: child);
+              /// 自定义
+              return SlideTransitionX(
+                position: animation,
+                child: child,
+                direction: AxisDirection.up,
+              );
+            },
+            child: Text(
+              "$_count",
+              /////显示指定key，不同的key会被认为是不同的Text，这样才能执行动画
+              ///AnimatedSwitcher的新旧child，如果类型相同，则Key必须不相等。
+              key: ValueKey<int>(_count),
+              style: Theme.of(context).textTheme.headline4,
+            ),
+          ),
+          RaisedButton(
+            onPressed: () {
+              setState(() {
+                _count += 1;
+              });
+            },
+            child: Text(
+              "+1",
+            ),
+          ),
+          AnimatedDecoratedBox1(
+            duration: duration,
+            decoration: BoxDecoration(color: _decorationColor),
+            child: FlatButton(
+              onPressed: () {
+                setState(() {
+                  _decorationColor = Colors.red;
+                });
+              },
+              child: Text(
+                "AnimatedDecoratedBox",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class MySlideTranstion extends AnimatedWidget {
+  MySlideTranstion(
+      {Key key,
+      @required Animation<Offset> position,
+      this.transformHitTests = true,
+      this.child})
+      : assert(position != null),
+        super(key: key, listenable: position);
+
+  Animation<Offset> get position => listenable;
+  final bool transformHitTests;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    Offset offset = position.value;
+    if (position.status == AnimationStatus.reverse) {
+      offset = Offset(-offset.dx, offset.dy);
+    }
+    return FractionalTranslation(
+      translation: offset,
+      transformHitTests: transformHitTests,
+      child: child,
+    );
+  }
+}
+
+class SlideTransitionX extends AnimatedWidget {
+  SlideTransitionX({
+    Key key,
+    @required Animation<double> position,
+    this.transformHitTests = true,
+    this.direction = AxisDirection.down,
+    this.child,
+  })  : assert(position != null),
+        super(key: key, listenable: position) {
+    // 偏移在内部处理
+    switch (direction) {
+      case AxisDirection.up:
+        _tween = Tween(begin: Offset(0, 1), end: Offset(0, 0));
+        break;
+      case AxisDirection.right:
+        _tween = Tween(begin: Offset(-1, 0), end: Offset(0, 0));
+        break;
+      case AxisDirection.down:
+        _tween = Tween(begin: Offset(0, -1), end: Offset(0, 0));
+        break;
+      case AxisDirection.left:
+        _tween = Tween(begin: Offset(1, 0), end: Offset(0, 0));
+        break;
+    }
+  }
+
+  Animation<double> get position => listenable;
+
+  final bool transformHitTests;
+
+  final Widget child;
+
+  //退场（出）方向
+  final AxisDirection direction;
+
+  Tween<Offset> _tween;
+
+  @override
+  Widget build(BuildContext context) {
+    Offset offset = _tween.evaluate(position);
+    if (position.status == AnimationStatus.reverse) {
+      switch (direction) {
+        case AxisDirection.up:
+          offset = Offset(offset.dx, -offset.dy);
+          break;
+        case AxisDirection.right:
+          offset = Offset(-offset.dx, offset.dy);
+          break;
+        case AxisDirection.down:
+          offset = Offset(offset.dx, -offset.dy);
+          break;
+        case AxisDirection.left:
+          offset = Offset(-offset.dx, offset.dy);
+          break;
+      }
+    }
+    return FractionalTranslation(
+      translation: offset,
+      transformHitTests: transformHitTests,
+      child: child,
+    );
+  }
+}
+
+class AnimatedDecoratedBox1 extends StatefulWidget {
+  AnimatedDecoratedBox1({
+    Key key,
+    @required this.decoration,
+    this.child,
+    this.curve = Curves.linear,
+    @required this.duration,
+    this.reverseDuration,
+  });
+
+  final BoxDecoration decoration;
+  final Widget child;
+  final Duration duration;
+  final Curve curve;
+  final Duration reverseDuration;
+
+  @override
+  _AnimatedDecoratedBox1State createState() => _AnimatedDecoratedBox1State();
+}
+
+class _AnimatedDecoratedBox1State extends State<AnimatedDecoratedBox1>
+    with SingleTickerProviderStateMixin {
+  @protected
+  AnimationController get controller => _controller;
+  AnimationController _controller;
+
+  Animation<double> get animation => _animation;
+  Animation<double> _animation;
+
+  DecorationTween _tween;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _animation,
+      builder: (context, child) {
+        return DecoratedBox(
+          decoration: _tween.animate(_animation).value,
+          child: child,
+        );
+      },
+      child: widget.child,
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: widget.duration,
+      reverseDuration: widget.reverseDuration,
+      vsync: this,
+    );
+    _tween = DecorationTween(begin: widget.decoration);
+    _updateCurve();
+  }
+
+  void _updateCurve() {
+    if (widget.curve != null)
+      _animation = CurvedAnimation(parent: _controller, curve: widget.curve);
+    else
+      _animation = _controller;
+  }
+
+  @override
+  void didUpdateWidget(AnimatedDecoratedBox1 oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.curve != oldWidget.curve) _updateCurve();
+    _controller.duration = widget.duration;
+    _controller.reverseDuration = widget.reverseDuration;
+    if (widget.decoration != (_tween.end ?? _tween.begin)) {
+      _tween
+        ..begin = _tween.evaluate(_animation)
+        ..end = widget.decoration;
+      _controller
+        ..value = 0.0
+        ..forward();
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+}
+
+class AnimatedWidgetsTest extends StatefulWidget {
+  @override
+  _AnimatedWidgetsTestState createState() => _AnimatedWidgetsTestState();
+}
+
+class _AnimatedWidgetsTestState extends State<AnimatedWidgetsTest> {
+  double _padding = 10;
+  var _align = Alignment.topRight;
+  double _height = 100;
+  double _left = 0;
+  Color _color = Colors.red;
+  TextStyle _style = TextStyle(color: Colors.black);
+  Color _decorationColor = Colors.blue;
+
+  @override
+  Widget build(BuildContext context) {
+    var duration = Duration(seconds: 5);
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          RaisedButton(
+            onPressed: () {
+              setState(() {
+                _padding = 20;
+              });
+            },
+            child: AnimatedPadding(
+              duration: duration,
+              padding: EdgeInsets.all(_padding),
+              child: Text("AnimatedPadding"),
+            ),
+          ),
+          SizedBox(
+            height: 50,
+            child: Stack(
+              children: <Widget>[
+                AnimatedPositioned(
+                  duration: duration,
+                  left: _left,
+                  child: RaisedButton(
+                    onPressed: () {
+                      setState(() {
+                        _left = 100;
+                      });
+                    },
+                    child: Text("AnimatedPositioned"),
+                  ),
+                )
+              ],
+            ),
+          ),
+          Container(
+            height: 100,
+            color: Colors.grey,
+            child: AnimatedAlign(
+              duration: duration,
+              alignment: _align,
+              child: RaisedButton(
+                onPressed: () {
+                  setState(() {
+                    _align = Alignment.center;
+                  });
+                },
+                child: Text("AnimatedAlign"),
+              ),
+            ),
+          ),
+          AnimatedContainer(
+            duration: duration,
+            height: _height,
+            color: _color,
+            child: FlatButton(
+              onPressed: () {
+                setState(() {
+                  _height = 150;
+                  _color = Colors.blue;
+                });
+              },
+              child: Text(
+                "AnimatedContainer",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+          AnimatedDefaultTextStyle(
+            child: GestureDetector(
+              child: Text("hello world"),
+              onTap: () {
+                setState(() {
+                  _style = TextStyle(
+                    color: Colors.blue,
+                    decorationStyle: TextDecorationStyle.solid,
+                    decorationColor: Colors.blue,
+                  );
+                });
+              },
+            ),
+            style: _style,
+            duration: duration,
+          ),
+          AnimatedDecoratedBox1(
+            duration: duration,
+            decoration: BoxDecoration(color: _decorationColor),
+            child: FlatButton(
+              onPressed: () {
+                setState(() {
+                  _decorationColor = Colors.red;
+                });
+              },
+              child: Text(
+                "AnimatedDecoratedBox",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          )
+        ].map((e) {
+          return Padding(
+            padding: EdgeInsets.symmetric(vertical: 16),
+            child: e,
+          );
+        }).toList(),
+      ),
+    );
+  }
+}
+
+/// 过渡
+class AnimatedWidgetFadeTest extends StatefulWidget {
+  AnimatedWidgetFadeTest({Key key}) : super(key: key);
+
+  @override
+  _AnimatedWidgetFadeTestState createState() => _AnimatedWidgetFadeTestState();
+}
+
+class _AnimatedWidgetFadeTestState extends State<AnimatedWidgetFadeTest> {
+  double _padding = 10;
+  var _align = Alignment.topRight;
+  double _height = 100;
+  double _left = 0;
+  Color _color = Colors.red;
+  TextStyle _style = TextStyle(color: Colors.black);
+  Color _decorationColor = Colors.blue;
+
+  @override
+  Widget build(BuildContext context) {
+    var duration = Duration(seconds: 5);
+    return Container(
+      child: Column(
+        children: <Widget>[
+          GradientButton(
+            colors: [Colors.orange, Colors.red],
+            height: 50.0,
+            child: Text("Submit"),
+            onPressed: onTap,
+          ),
+          GradientButton(
+            height: 50.0,
+            colors: [Colors.lightGreen, Colors.green[700]],
+            child: Text("Submit"),
+            onPressed: onTap,
+          ),
+          GradientButton(
+            height: 50.0,
+            colors: [Colors.lightBlue[300], Colors.blueAccent],
+            child: Text("Submit"),
+            onPressed: onTap,
+          ),
+        ],
+      ),
+    );
+  }
+
+  onTap() {
+    print("button click");
+  }
+
+}
+
+class GradientButton extends StatelessWidget {
+  const GradientButton({Key key,
+    this.colors,
+    this.width,
+    this.height,
+    this.onPressed,
+    this.borderRadius,
+    @required this.child,
+  }) : super(key: key);
+
+  final List<Color> colors;
+  final double width;
+  final double height;
+
+  final Widget child;
+  final BorderRadius borderRadius;
+
+  final GestureTapCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
+    List<Color> _colors = colors ??
+        [theme.primaryColor, theme.primaryColorDark ?? theme.primaryColor];
+
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(colors: _colors),
+        borderRadius: borderRadius,
+      ),
+      child: Material(
+        type: MaterialType.transparency,
+        child: InkWell(
+          splashColor: _colors.last,
+          highlightColor: Colors.transparent,
+          borderRadius: borderRadius,
+          onTap: onPressed,
+          child: ConstrainedBox(
+            constraints: BoxConstraints.tightFor(height: height, width: width),
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: DefaultTextStyle(
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    child: child),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+

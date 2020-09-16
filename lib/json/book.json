@@ -1,0 +1,6 @@
+{
+    "name":"book1",
+    "author":{"name":"Jack"},
+    "publishDate":"2018-10-10",
+    "publisher":"xxx company"
+  }
